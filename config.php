@@ -21,7 +21,7 @@ if(ENVIRONMENT == 'development') {
 global $database;
 
 try {
-    $dsn = 'mysql:dbname='.$config['database_name'].';host='.$config['host'];
+    $dsn = 'mysql:dbname='.$config['database_name'].';host='.$config['host'].';charset=utf8';
     $database = new PDO($dsn, $config['database_user'], $config['database_password']);
 } catch(PDOException $e) {
     die($e->getMessage());

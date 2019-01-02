@@ -6,7 +6,9 @@ use \Core\Model;
 
 class Student extends Model
 {
-    public function isLoggedIn()
+    private $info;
+
+    public function isLoggedIn(): bool
     {
         if (!empty($_SESSION['student'])) {
             return true;
@@ -28,5 +30,27 @@ class Student extends Model
             return true;
         }
         return false;
+    }
+
+    public function setStudent(int $id): void
+    {
+        $sql = 'SELECT id, name, email FROM students WHERE id = :id';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $this->info = $sql->fetch(\PDO::FETCH_ASSOC);
+        }
+    }
+
+    public function getName(): string
+    {
+        return $this->info['name'];
+    }
+
+    public function getId(): int
+    {
+        return $this->info['id'];
     }
 }
