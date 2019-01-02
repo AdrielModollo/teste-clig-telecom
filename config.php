@@ -5,8 +5,8 @@ require 'environment.php';
 $config = [];
 
 if(ENVIRONMENT == 'development') {
-    define('BASE_URL', 'http://localhost/mvc_boilerplate_php');
-    $config['database_name'] = 'devbook';
+    define('BASE_URL', 'http://localhost/e-learning/');
+    $config['database_name'] = 'e_learning';
     $config['host'] = 'localhost';
     $config['database_user'] = 'root';
     $config['database_password'] = '';

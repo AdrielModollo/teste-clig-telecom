@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My website</title>
+    <title>E-learning</title>
+    <link rel="stylesheet" href="<?php echo BASE_URL.'assets/css/login.css'; ?>">
 </head>
 <body>
-    <header>Header</header>
     <?php $this->loadViewInTemplate($viewName, $viewData); ?>
-    <footer>Footer</footer>
 </body>
 </html>
