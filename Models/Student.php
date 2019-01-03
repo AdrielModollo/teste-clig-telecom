@@ -44,6 +44,25 @@ class Student extends Model
         }
     }
 
+    public function isEnrolled(int $course_id): bool
+    {
+        $sql = 'SELECT id, 
+                       course_id, 
+                       student_id
+                FROM courses_has_students
+                WHERE student_id = :student_id
+                AND course_id = :course_id';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':student_id', $this->getId());
+        $sql->bindValue(':course_id', $course_id);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            return true;
+        }
+        return false;
+    }
+
     public function getName(): string
     {
         return $this->info['name'];

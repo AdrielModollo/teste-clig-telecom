@@ -6,6 +6,8 @@ use \Core\Model;
 
 class Course extends Model
 {
+	private $info;
+
 	public function getCoursesByStudent(int $id): array
 	{
 		$array = [];
@@ -27,5 +29,37 @@ class Course extends Model
 		}
 
 		return $array;
+	}
+
+	public function setCourse(int $id): void
+	{
+		$sql = 'SELECT id, 
+					   name, 
+					   image, 
+					   description 
+				FROM courses 
+				WHERE id = :id';
+		$sql = $this->database->prepare($sql);
+		$sql->bindValue(':id', $id);
+		$sql->execute();
+
+		if ($sql->rowCount() > 0) {
+			$this->info = $sql->fetch(\PDO::FETCH_ASSOC);
+		}
+	}
+
+	public function getName(): string
+	{
+		return $this->info['name'];
+	}
+
+	public function getImage(): string
+	{
+		return $this->info['image'];
+	}
+
+	public function getDescription(): string
+	{
+		return $this->info['description'];
 	}
 }
