@@ -83,6 +83,16 @@ class CoursesController extends Controller
                 $this->lesson->setQuestion($question, $this->student->getId());
             }
 
+            if (!empty($_POST['option'])) {
+                $option = $_POST['option'];
+
+                if ($option == $data['lesson_info']['answer']) {
+                    $data['answer'] = true;
+                } else {
+                    $data['answer'] = false;
+                }
+            }
+
             $this->loadTemplate($view, $data);
         } else {
             header('Location: '.BASE_URL);
