@@ -1,73 +1,95 @@
 body {
-	margin: 0;
+    margin: 0;
 }
 
 header {
-	height: 40px;
-	background-color: #333;
-	color: #fff;
+    height: 40px;
+    background-color: #333;
+    color: #fff;
 }
 
 header a {
-	color: #fff;
-	text-decoration: none;
-	float: right;
-	line-height: 40px;
-	padding-right: 20px;
-	padding-left: 20px;
+    color: #fff;
+    text-decoration: none;
+    float: right;
+    line-height: 40px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
 
 header a:hover {
-	background-color: #ccc;
+    background-color: #ccc;
 }
 
 .user_header {
-	float: right;
-	margin-right: 20px;
-	height: 40px;
-	line-height: 40px;
+    float: right;
+    margin-right: 20px;
+    height: 40px;
+    line-height: 40px;
 }
 
 .course_item {
-	width: 260px;
-	float: left;
-	margin-left: 10px;
-	margin-right: 10px;
-	border: 2px solid #ccc;
-	border-radius: 10px;
-	text-align: center;
-	margin-bottom: 20px;
+    width: 260px;
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .course_info {
-	height: 80px;
-	background-color: #ddd;
+    height: 80px;
+    background-color: #ddd;
 }
 
 .course_info img {
-	float: left;
-	margin-right: 20px;
-	margin-top: 10px;
-	margin-left: 20px;
+    float: left;
+    margin-right: 20px;
+    margin-top: 10px;
+    margin-left: 20px;
 }
 
 .course_info h3 {
-	margin: 0;
-	padding-top: 10px;
+    margin: 0;
+    padding-top: 10px;
 }
 
 .course_left {
-	width: 30%;
-	min-height: 300px;
-	float: left;
-	background-color: #ddd;
-	overflow-y: scroll;
+    width: 30%;
+    min-height: 300px;
+    float: left;
+    background-color: #ddd;
+    overflow-y: scroll;
+}
+
+.course_left a {
+    color: #000;
+    text-decoration: none;
 }
 
 .course_right {
-	width: 70%;
-	min-height: 300px;
-	float: left;
-	background-color: #bbb;
-	overflow-y: scroll;
+    width: 70%;
+    min-height: 300px;
+    float: left;
+    background-color: #bbb;
+    overflow-y: scroll;
+}
+
+.module {
+    height: 30px;
+    line-height: 30px;
+    padding-left: 20px;
+    background-color: #bbb;
+}
+
+.lesson {
+    height: 30px;
+    line-height: 30px;
+    padding-left: 30px;
+}
+
+.lesson:hover {
+    background-color: #aaa;
 }

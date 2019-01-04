@@ -8,29 +8,29 @@ use \Models\Course;
 
 class HomeController extends Controller 
 {
-	public function __construct()
-	{
-		$student = new Student();
+    public function __construct()
+    {
+        $student = new Student();
 
-		if (!$student->isLoggedIn()) {
-			header('Location: '.BASE_URL.'login');
-		}
-	}
+        if (!$student->isLoggedIn()) {
+            header('Location: '.BASE_URL.'login');
+        }
+    }
 
     public function index(): void
     {
-    	$data = [
-    		'info' => [],
-    		'courses' => []
-    	];
+        $data = [
+            'info' => [],
+            'courses' => []
+        ];
 
-    	$student = new Student();
-    	$student->setStudent($_SESSION['student']);
+        $student = new Student();
+        $student->setStudent($_SESSION['student']);
 
-    	$course = new Course();
-    	$data['courses'] = $course->getCoursesByStudent($student->getId());
+        $course = new Course();
+        $data['courses'] = $course->getCoursesByStudent($student->getId());
 
-    	$data['info'] = $student;
+        $data['info'] = $student;
         $this->loadTemplate('home', $data);
     }
 }
