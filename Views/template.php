@@ -3,7 +3,9 @@
 <head>
     <title>E-learning</title>
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL.'assets/css/main.css'; ?>">
-    <link rel="stylesheet" href="<?php echo BASE_URL.'assets/css/login.css'; ?>">
+    <?php if(isset($_GET['url']) && $_GET['url'] == 'login'): ?>
+        <link rel="stylesheet" href="<?php echo BASE_URL.'assets/css/login.css'; ?>">
+    <?php endif; ?>
     <script src="<?php echo BASE_URL; ?>node_modules/jquery/dist/jquery.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/script.js"></script>
 </head>

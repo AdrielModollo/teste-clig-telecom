@@ -93,3 +93,8 @@ header a:hover {
 .lesson:hover {
     background-color: #aaa;
 }
+
+.form_question textarea {
+    width: 100%;
+    height: 150px;
+}

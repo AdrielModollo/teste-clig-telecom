@@ -43,4 +43,69 @@ class Lesson extends Model
         }
         return $array;
     }
+
+    public function getCourseByLesson(int $lesson_id): int
+    {
+        $sql = 'SELECT course_id
+                FROM lessons
+                WHERE id = :lesson_id';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':lesson_id', $lesson_id);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            return $sql->fetch(\PDO::FETCH_ASSOC)['course_id'];
+        }
+
+        return 0;
+    }
+
+    public function getLesson($lesson_id): array
+    {
+        $array = [];
+
+        $sql = 'SELECT type
+                FROM lessons
+                WHERE id = :lesson_id';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':lesson_id', $lesson_id);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $row = $sql->fetch(\PDO::FETCH_ASSOC);
+
+            if ($row['type'] == 'video') {
+                $sql = 'SELECT id, lesson_id, name, description, url
+                        FROM videos
+                        WHERE lesson_id = :lesson_id';
+                $sql = $this->database->prepare($sql);
+                $sql->bindValue(':lesson_id', $lesson_id);
+                $sql->execute();
+                $array = $sql->fetch(\PDO::FETCH_ASSOC);
+                $array['type'] = 'video';
+            } else if ($row['type'] == 'questionnaire') {
+                $sql = 'SELECT id, lesson_id, question, option1, option2, option3, option4, answer
+                        FROM questionnaires
+                        WHERE lesson_id = :lesson_id';
+                $sql = $this->database->prepare($sql);
+                $sql->bindValue(':lesson_id', $lesson_id);
+                $sql->execute();
+                $array = $sql->fetch(\PDO::FETCH_ASSOC);
+                $array['type'] = 'questionnaire';
+            }
+        }
+
+        return $array;
+    }
+
+    public function setQuestion(string $question, int $student_id): void
+    {
+        $sql = 'INSERT INTO questions
+                (question_date, question, student_id)
+                VALUES(NOW(), :question, :student_id)';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':question', $question);
+        $sql->bindValue(':student_id', $student_id);
+        $sql->execute();
+    }
 }
