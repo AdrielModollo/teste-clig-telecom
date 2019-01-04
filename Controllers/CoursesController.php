@@ -93,6 +93,11 @@ class CoursesController extends Controller
                 }
             }
 
+            if (!empty($_POST['mark_assisted'])) {
+                $this->lesson->toggleWatched($data['lesson_info']['id']);
+                header('Location: '.BASE_URL.'courses/lesson/'.$data['lesson_info']['id']);
+            }
+
             $this->loadTemplate($view, $data);
         } else {
             header('Location: '.BASE_URL);

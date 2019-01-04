@@ -28,6 +28,13 @@
         src="http://player.vimeo.com/video/<?php echo $lesson_info['url']; ?>">
      </iframe><br><br>
      <?php echo $lesson_info['description']; ?>
+     <br><br>
+     <form method="POST">
+         <input 
+            type="submit" 
+            name="mark_assisted" 
+            value="<?php echo $lesson_info['watched'] === '1' ? 'Desmarcar aula' : 'Marcar como assistida'; ?>">
+     </form>
      <hr>
      <h3>Dúvidas? Envie sua pergunta!</h3>
      <form method="POST" class="form_question">

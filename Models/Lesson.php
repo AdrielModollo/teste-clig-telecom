@@ -64,10 +64,17 @@ class Lesson extends Model
     {
         $array = [];
 
-        $sql = 'SELECT type
+        $sql = 'SELECT type,
+                    (select 
+                        count(*) 
+                    from historic
+                    where historic.lesson_id = lessons.id 
+                    AND historic.student_id = :student_id) 
+                    AS watched
                 FROM lessons
                 WHERE id = :lesson_id';
         $sql = $this->database->prepare($sql);
+        $sql->bindValue(':student_id', $_SESSION['student']);
         $sql->bindValue(':lesson_id', $lesson_id);
         $sql->execute();
 
@@ -93,6 +100,7 @@ class Lesson extends Model
                 $array = $sql->fetch(\PDO::FETCH_ASSOC);
                 $array['type'] = 'questionnaire';
             }
+            $array['watched'] = $row['watched'];
         }
 
         return $array;
@@ -107,5 +115,36 @@ class Lesson extends Model
         $sql->bindValue(':question', $question);
         $sql->bindValue(':student_id', $student_id);
         $sql->execute();
+    }
+
+    public function toggleWatched(int $lesson_id): void
+    {
+        $sql = 'SELECT id
+                FROM historic
+                WHERE student_id = :student_id
+                AND lesson_id = :lesson_id';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':student_id', $_SESSION['student']);
+        $sql->bindValue(':lesson_id', $lesson_id);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $sql = 'DELETE
+                    FROM historic
+                    WHERE student_id = :student_id
+                    AND lesson_id = :lesson_id';
+            $sql = $this->database->prepare($sql);
+            $sql->bindValue(':student_id', $_SESSION['student']);
+            $sql->bindValue(':lesson_id', $lesson_id);
+            $sql->execute();
+        } else {
+            $sql = 'INSERT INTO historic
+                    (date_view, student_id, lesson_id)
+                    VALUES (NOW(), :student_id, :lesson_id)';
+            $sql = $this->database->prepare($sql);
+            $sql->bindValue(':student_id', $_SESSION['student']);
+            $sql->bindValue(':lesson_id', $lesson_id);
+            $sql->execute();
+        }
     }
 }
