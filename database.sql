@@ -77,3 +77,9 @@ CREATE TABLE questions(
     student_id int NOT NULL,
     FOREIGN KEY(student_id) REFERENCES students(id)
 );
+
+CREATE TABLE admin(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(32) NOT NULL
+);
