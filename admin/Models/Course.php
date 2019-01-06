@@ -131,4 +131,64 @@ class Course extends Model
         $sql = $this->database->prepare($sql);
         $sql->execute($params);
     }
+
+    public function getNameAndIdFromCourses(): array
+    {
+        $array = [];
+
+        $sql = 'SELECT id, name FROM courses';
+        $sql = $this->database->query($sql);
+
+        if ($sql->rowCount() > 0) {
+            $array = $sql->fetchAll(\PDO::FETCH_ASSOC);
+        }
+
+        return $array;
+    }
+
+    public function getCoursesByStudent(int $student_id): array
+    {
+        $array = [];
+
+        $sql = 'SELECT course_id
+                FROM courses_has_students
+                WHERE student_id = :student_id';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':student_id', $student_id);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $rows = $sql->fetchAll(\PDO::FETCH_ASSOC);
+
+            foreach($rows as $row) {
+                array_push($array, $row['course_id']);
+            }
+        }
+
+        return $array;
+    }
+
+    public function deleteCoursesHasStudentsByStudentId(int $student_id): void
+    {
+        $params = func_get_args();
+
+        $sql = 'DELETE FROM courses_has_students
+                WHERE student_id = ?';
+        $sql = $this->database->prepare($sql);
+        $sql->execute($params);
+    }
+
+    public function addCoursesHasStudents(int $student_id, array $courses_id): void
+    {
+        foreach($courses_id as $course_id) {
+            $sql = 'INSERT INTO courses_has_students
+                        (student_id, course_id)
+                    VALUES
+                        (:student_id, :course_id)';
+            $sql = $this->database->prepare($sql);
+            $sql->bindValue(':student_id', $student_id);
+            $sql->bindValue(':course_id', $course_id);
+            $sql->execute();
+        }
+    }
 }

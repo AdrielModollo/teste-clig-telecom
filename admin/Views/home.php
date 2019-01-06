@@ -1,8 +1,10 @@
 <header>
     <?php if(!empty($_SESSION['user'])): ?>
-        <a href="<?php echo BASE_URL.'login/logout'; ?>">
+        <a style="float: right;" href="<?php echo BASE_URL.'login/logout'; ?>">
             Sair
         </a>
+        <a href="<?php echo BASE_URL; ?>">Cursos</a>
+        <a href="<?php echo BASE_URL; ?>students">Alunos</a>
     <?php endif; ?>
 </header>
 <h1>Cursos</h1>
