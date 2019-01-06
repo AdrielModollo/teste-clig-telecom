@@ -2,6 +2,20 @@ body {
     margin: 0;
 }
 
+h4 {
+    background-color: #eee;
+    height: 35px;
+    line-height: 35px;
+    padding-left: 20px;
+}
+
+h5 {
+    height: 35px;
+    line-height: 35px;
+    padding-left: 40px;
+    margin: 0;
+}
+
 header {
     height: 40px;
     background-color: #333;

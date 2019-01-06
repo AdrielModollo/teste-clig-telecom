@@ -6,18 +6,21 @@ use \Core\Controller;
 use \Models\User;
 use \Models\Course;
 use \Models\Module;
+use \Models\Lesson;
 
 class HomeController extends Controller 
 {
     private $user;
     private $course;
     private $module;
+    private $lesson;
 
     public function __construct()
     {
         $this->user = new User();
         $this->course = new Course();
         $this->module = new Module();
+        $this->lesson = new Lesson();
 
         if (!$this->user->isLoggedIn()) {
             header('Location: '.BASE_URL.'/login');
@@ -73,6 +76,20 @@ class HomeController extends Controller
 
         if (!empty($_POST['module_id'])) {
             $this->module->delete($_POST['module_id']);
+            header('Location: '.BASE_URL.'home/edit/'.$course_id);
+        }
+
+        if (!empty($_POST['lesson_id'])) {
+            $this->lesson->delete($_POST['lesson_id']);
+            header('Location: '.BASE_URL.'home/edit/'.$course_id);
+        }
+
+        if (!empty($_POST['add_lesson_name'])) {
+            $name = $_POST['add_lesson_name'];
+            $module = $_POST['add_lesson_module'];
+            $type = $_POST['add_lesson_type'];
+
+            $this->lesson->add($course_id, $name, $module, $type);
             header('Location: '.BASE_URL.'home/edit/'.$course_id);
         }
         
