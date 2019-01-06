@@ -144,4 +144,59 @@ class HomeController extends Controller
 
         $this->loadTemplate('module_edit', $data);
     }
+
+    public function edit_lesson(int $lesson_id): void
+    {
+        $data = [];  
+
+        $data['lesson'] = $this->lesson->getLesson($lesson_id);
+
+        if (!count($data['lesson']) > 0) {
+            header('Location: '.BASE_URL);
+        }
+
+        if ($data['lesson']['type'] === 'video') {
+            $view = 'edit_lesson_video';
+        } else {
+            $view = 'edit_lesson_questionnaire';
+        }
+
+        if (!empty($_POST['name'])) {
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+            $url = $_POST['url'];
+            $this->lesson->updateVideoLesson($name, $description, $url, $lesson_id);
+            header('Location: '.BASE_URL.'home/edit_lesson/'.$lesson_id);
+        } 
+
+        if (!empty($_POST['question'])) {
+            $fields = ['option1', 'option2', 'option3', 'option4', 'answer'];
+            $valid = true;
+
+            foreach($fields as $field) {
+                if(empty($_POST[$field])) {
+                    $valid = false;
+                }
+            }
+
+            if($valid) {
+                $question = $_POST['question'];
+                $option1 = $_POST['option1'];
+                $option2 = $_POST['option2'];
+                $option3 = $_POST['option3'];
+                $option4 = $_POST['option4'];
+                $answer = $_POST['answer'];
+                $this->lesson->updateQuestionnaireLesson($question,
+                                                         $option1,
+                                                         $option2,
+                                                         $option3,
+                                                         $option4,
+                                                         $answer,
+                                                         $lesson_id);
+            }
+            header('Location: '.BASE_URL.'home/edit_lesson/'.$lesson_id);
+        }
+
+        $this->loadTemplate($view, $data); 
+    }
 }

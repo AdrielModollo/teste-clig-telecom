@@ -105,4 +105,79 @@ class Lesson extends Model
             $sql->execute([$lesson_id]);
         }
     }
+
+    public function getLesson($lesson_id): array
+    {
+        $array = [];
+
+        $sql = 'SELECT type
+                FROM lessons
+                WHERE id = :lesson_id';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':lesson_id', $lesson_id);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $row = $sql->fetch(\PDO::FETCH_ASSOC);
+
+            if ($row['type'] == 'video') {
+                $sql = 'SELECT id, lesson_id, name, description, url
+                        FROM videos
+                        WHERE lesson_id = :lesson_id';
+                $sql = $this->database->prepare($sql);
+                $sql->bindValue(':lesson_id', $lesson_id);
+                $sql->execute();
+                $array = $sql->fetch(\PDO::FETCH_ASSOC);
+                $array['type'] = 'video';
+            } else if ($row['type'] == 'questionnaire') {
+                $sql = 'SELECT id, lesson_id, question, option1, option2, option3, option4, answer
+                        FROM questionnaires
+                        WHERE lesson_id = :lesson_id';
+                $sql = $this->database->prepare($sql);
+                $sql->bindValue(':lesson_id', $lesson_id);
+                $sql->execute();
+                $array = $sql->fetch(\PDO::FETCH_ASSOC);
+                $array['type'] = 'questionnaire';
+            }
+        }
+
+        return $array;
+    }
+
+    public function updateVideoLesson(string $name, 
+                           string $description, 
+                           string $url, 
+                           int $lesson_id): void
+    {
+        $sql = 'UPDATE videos
+                SET name = :name, description = :description, url = :url
+                WHERE lesson_id = :lesson_id';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':name', $name);
+        $sql->bindValue(':description', $description);
+        $sql->bindValue(':url', $url);
+        $sql->bindValue(':lesson_id', $lesson_id);
+        $sql->execute();
+    }
+
+    public function updateQuestionnaireLesson(string $question,
+                                              string $option1,
+                                              string $option2,
+                                              string $option3,
+                                              string $option4,
+                                              string $answer,
+                                              int $lesson_id): void
+    {
+        $params = func_get_args();
+        $sql = 'UPDATE questionnaires
+                SET question = ?,
+                    option1 = ?,
+                    option2 = ?,
+                    option3 = ?,
+                    option4 = ?,
+                    answer = ?
+                WHERE lesson_id = ?';
+        $sql = $this->database->prepare($sql);
+        $sql->execute($params);
+    }
 }
