@@ -5,16 +5,19 @@ namespace Controllers;
 use \Core\Controller;
 use \Models\User;
 use \Models\Course;
+use \Models\Module;
 
 class HomeController extends Controller 
 {
     private $user;
     private $course;
+    private $module;
 
     public function __construct()
     {
         $this->user = new User();
         $this->course = new Course();
+        $this->module = new Module();
 
         if (!$this->user->isLoggedIn()) {
             header('Location: '.BASE_URL.'/login');
@@ -52,13 +55,25 @@ class HomeController extends Controller
     public function edit(int $course_id): void
     {
         $data = [
-            'course' => []
+            'course' => [],
+            'modules' => []
         ];
 
         $data['course'] = $this->course->getCourse($course_id);
+        $data['modules'] = $this->module->getModules($course_id);
 
         if (count($data['course']) === 0) {
             header('Location: '.BASE_URL);
+        }
+
+        if (!empty($_POST['module_name'])) {
+            $this->module->add($_POST['module_name'], $course_id);
+            header('Location: '.BASE_URL.'home/edit/'.$course_id);
+        }
+
+        if (!empty($_POST['module_id'])) {
+            $this->module->delete($_POST['module_id']);
+            header('Location: '.BASE_URL.'home/edit/'.$course_id);
         }
         
         $this->record('update', $course_id); 
@@ -93,5 +108,23 @@ class HomeController extends Controller
                 }
             }
         }
+    }
+
+    public function edit_module(int $module_id): void
+    {
+        $data = [
+            'module' => $this->module->getModule($module_id)
+        ];
+
+        if (count($data['module']) === 0) {
+            header('Location: '.BASE_URL);
+        }
+
+        if (!empty($_POST['module_name'])) {
+            $this->module->update($_POST['module_name'], $module_id);
+            header('Location: '.BASE_URL.'home/edit_module/'.$module_id);
+        }
+
+        $this->loadTemplate('module_edit', $data);
     }
 }

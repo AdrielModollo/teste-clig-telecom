@@ -18,3 +18,22 @@
     <img src="/e-learning/assets/images/courses/<?php echo $course['image']; ?>"><br>
     <input type="submit" value="Adicionar curso">
 </form>
+
+<hr>
+<h2>Aulas</h2>
+<fieldset>
+    <legend>Adicionar módulo</legend>
+    <form method="POST">
+        Nome do módulo: <br>
+        <input type="text" name="module_name">
+        <input type="submit" value="Adicionar módulo">
+    </form>
+</fieldset>
+<?php foreach($modules as $module): ?>
+    <h4><?php echo $module['name']; ?></h4>
+    <form method="POST">
+        <input type="hidden" name="module_id" value="<?php echo $module['id']; ?>">
+        <button type="submit">X</button>
+    </form>
+    <a href="<?php echo BASE_URL; ?>home/edit_module/<?php echo $module['id']; ?>">Editar</a>
+<?php endforeach; ?>
