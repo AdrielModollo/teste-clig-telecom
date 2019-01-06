@@ -100,4 +100,35 @@ class Course extends Model
         $sql->bindValue(':image', $image_name);
         $sql->execute();
     }
+
+    public function getCourse(int $course_id): array
+    {
+        $array = [];
+
+        $sql = 'SELECT name, image, description
+                FROM courses
+                WHERE id = :id';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':id', $course_id);
+        $sql->execute();
+
+        if ($sql->rowCount() > 0) {
+            $array = $sql->fetch(\PDO::FETCH_ASSOC);
+        }
+
+        return $array;
+    }
+
+    public function update(string $name, 
+                         string $description, 
+                         string $image_name,
+                         int $course_id): void
+    {
+        $params = func_get_args();
+        $sql = 'UPDATE courses
+                SET name = ?, description = ?, image = ?
+                WHERE id = ?';
+        $sql = $this->database->prepare($sql);
+        $sql->execute($params);
+    }
 }

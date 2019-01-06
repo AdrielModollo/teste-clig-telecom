@@ -44,7 +44,28 @@ class HomeController extends Controller
         header('Location: '.BASE_URL);
     }
 
-    public function add()
+    public function add(): void
+    {   $this->record('add');
+        $this->loadTemplate('course_add', []);
+    }
+
+    public function edit(int $course_id): void
+    {
+        $data = [
+            'course' => []
+        ];
+
+        $data['course'] = $this->course->getCourse($course_id);
+
+        if (count($data['course']) === 0) {
+            header('Location: '.BASE_URL);
+        }
+        
+        $this->record('update', $course_id); 
+        $this->loadTemplate('course_edit', $data);
+    }
+
+    private function record(string $type, int $course_id = 0): void
     {
         if (!empty($_POST['name']) && !empty($_POST['description'])) {
             $name = $_POST['name'];
@@ -59,12 +80,18 @@ class HomeController extends Controller
                     $abs_path = $abs_path = $_SERVER['DOCUMENT_ROOT'];
                     $file = $abs_path.'/e-learning/assets/images/courses/'.$image_name;
                     move_uploaded_file($image['tmp_name'], $file);
-                    $this->course->add($name, $description, $image_name);
+                    
+                    switch($type) {
+                        case 'add':
+                            $this->course->add($name, $description, $image_name);
+                            break;
+                        case 'update':
+                            $this->course->update($name, $description, $image_name, $course_id);
+                    }
+
                     header('Location: '.BASE_URL);
                 }
             }
         }
-
-        $this->loadTemplate('course_add', []);
     }
 }
