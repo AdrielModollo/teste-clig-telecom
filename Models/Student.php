@@ -72,4 +72,19 @@ class Student extends Model
     {
         return $this->info['id'];
     }
+
+    public function getCountAssistedLessons(int $course_id): int
+    {
+        $sql = 'SELECT id
+                FROM historic
+                WHERE student_id = :student_id
+                AND lesson_id 
+                IN(select l.id from lessons l where l.course_id = :course_id)';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':student_id', $this->getId());
+        $sql->bindValue(':course_id', $course_id);
+        $sql->execute();
+
+        return $sql->rowCount();
+    }
 }

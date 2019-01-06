@@ -48,6 +48,11 @@ class Course extends Model
         }
     }
 
+    public function getId(): int
+    {
+        return $this->info['id'];
+    }
+
     public function getName(): string
     {
         return $this->info['name'];
@@ -61,5 +66,16 @@ class Course extends Model
     public function getDescription(): string
     {
         return $this->info['description'];
+    }
+
+    public function getTotalLessons(): int
+    {
+        $sql = 'SELECT COUNT(*) AS count
+                FROM lessons
+                WHERE course_id = ?';
+        $sql = $this->database->prepare($sql);
+        $sql->execute([$this->getId()]);
+
+        return $sql->fetch(\PDO::FETCH_ASSOC)['count'];
     }
 }

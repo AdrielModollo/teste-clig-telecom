@@ -4,6 +4,7 @@
         height="60" />
     <h3><?php echo $course->getName(); ?></h3>
     <?php echo $course->getDescription(); ?>
+    <?php echo $assisted_lessons.' / '.$total_lessons.' ('.$percentage.'%)'; ?>
 </div>
 <div class="course_left">
     <?php foreach($modules as $module): ?>

@@ -70,7 +70,10 @@ class CoursesController extends Controller
             $this->course->setCourse($id);
             $data['course'] = $this->course;
             $data['modules'] = $this->module->getModules($id);
+            $data['assisted_lessons'] = $this->student->getCountAssistedLessons($id);
             $data['lesson_info'] = $this->lesson->getLesson($lesson_id);
+            $data['total_lessons'] = $this->course->getTotalLessons();
+            $data['percentage'] = number_format($data['assisted_lessons'] / $data['total_lessons'] * 100, 2);
 
             if ($data['lesson_info']['type'] == 'video') {
                 $view = 'course_lesson_video';
