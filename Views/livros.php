@@ -7,7 +7,7 @@
     <?php endif; ?>
 </header>
 <h1>Livros</h1>
-<a href="<?php echo BASE_URL; ?>livros/add">Adicionar livros</a>
+<a href="<?php echo BASE_URL; ?>livros/add">Adicionar livro</a>
 <table border="1" width="100%">
     <tr>
         <th>Nome</th>

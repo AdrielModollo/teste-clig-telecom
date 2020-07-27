@@ -5,6 +5,7 @@ namespace Controllers;
 use \Core\Controller;
 use \Models\Usuario;
 use \Models\Livro;
+use \Models\Categoria;
 
 class LivrosController extends Controller
 {
@@ -12,6 +13,7 @@ class LivrosController extends Controller
     {
         $this->usuario = new Usuario();
         $this->livro = new Livro();
+        $this->categoria = new Categoria();
 
         if (!$this->usuario->estaLogado()) {
             header('Location: '.BASE_URL.'login');
@@ -28,23 +30,39 @@ class LivrosController extends Controller
     public function add()
     {
         $data = [];
+        $data['categorias'] = $this->categoria->getCategorias();
         $data['erros'] = [];
 
-        if (isset($_POST['nome']) && isset($_POST['autor'])  && isset($_POST['descricao'])) {
-            if (empty($_POST['nome']) && empty($_POST['autor'])   && empty($_POST['descricao'])) { 
-                array_push($data['erros'], 'É obrigatório preencher todos os dados');
+        if (isset($_POST['nome'])) { 
+            $nome = $_POST['nome'];
+            $autor = $_POST['autor'];
+            $descricao = $_POST['descricao'];
+            $categoria_id = $_POST['categoria_id'];
+
+            if (empty($nome)) {
+                array_push($data['erros'], 'O nome do livro é obrigatório');
             }
-            
-            if (strlen($_POST['nome']) && strlen($_POST['autor']) && strlen($_POST['descricao'])> 100) {
-                array_push($data['erros'], 'Os campos deve possuir no máximo 100 caracteres');
+
+            if (strlen($nome) > 100) {
+                array_push($data['erros'], 'O nome do livro deve possuir no máximo 100 caracteres');
+            }
+
+            if (empty($autor)) {
+                array_push($data['erros'], 'O nome do autor é obrigatório');
+            }
+
+            if (strlen($autor) > 100) {
+                array_push($data['erros'], 'O nome do autor deve possuir no máximo 100 caracteres');
+            }
+
+            if (empty($categoria_id)) {
+                array_push($data['erros'], 'A categoria é obrigatória');
             }
             
             if (count($data['erros']) > 0) {
                 return $this->loadTemplate('adicionar_livro', $data);
             } else {
-                $this->categoria->adicionar($_POST['nome']);
-                $this->categoria->adicionar($_POST['autor']);
-                $this->categoria->adicionar($_POST['descricao']);
+                $this->livro->adicionar($nome, $autor, $descricao, $categoria_id);
                 header('Location: '.BASE_URL.'livros');
             }    
         }

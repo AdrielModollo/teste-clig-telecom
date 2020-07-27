@@ -33,18 +33,18 @@ class Livro extends Model {
         $sql->execute();
     }
 
-    public function adicionar(string $nome, string $autor, string $descricao): void
+    public function adicionar(string $nome, string $autor, string $descricao, int $categoria_id): void
     {
         $sql = 'INSERT INTO livros
-                    (nome,autor,descricao)
+                    (nome, autor, descricao, categoria_id)
                 VALUES
-                    (:nome, :autor, :descricao)';
+                    (:nome, :autor, :descricao, :categoria_id)';
         $sql = $this->database->prepare($sql);
         $sql->bindValue(':nome', $nome);
         $sql->bindValue(':autor', $autor);
         $sql->bindValue(':descricao', $descricao);
+        $sql->bindValue(':categoria_id', $categoria_id); 
         $sql->execute();
     }
 
 }
-

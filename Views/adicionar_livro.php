@@ -12,15 +12,23 @@
     <input type="text" name="nome"><br>
     Autor: <br>
     <input type="text" name="autor"><br>
+    Categoria: <br>
+    <select name="categoria_id">
+        <?php foreach($categorias as $categoria): ?>
+            <option value="<?php echo $categoria['id']; ?>">
+                <?php echo $categoria['nome']; ?>
+            </option>
+        <?php endforeach; ?>
+    </select><br>
     Descricao: <br>
-    <input type="text" name="descricao"><br><br>
+    <textarea name="descricao"></textarea><br><br>
     
     <?php if(!empty($erros)): ?>
         <div>
             <?php foreach($erros as $erro): ?>
                 <span>
                     <?php echo $erro; ?>
-                </span>
+                </span> <br>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
