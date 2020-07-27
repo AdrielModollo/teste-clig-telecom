@@ -12,13 +12,9 @@ class Livro extends Model {
     {
         $array = [];
 
-        $sql = 'SELECT 
-                    id, 
-                    nome,
-                    autor,
-                    descricao,
-                    categoria_id
-                FROM livros';
+        $sql = 'SELECT l.id, l.nome, l.autor, l.descricao, c.nome as categoria_nome 
+                FROM livros l 
+                INNER JOIN categorias c ON c.id = l.categoria_id';
         $sql = $this->database->query($sql);
 
         if ($sql->rowCount() > 0) {

@@ -12,11 +12,16 @@
     <tr>
         <th>Nome</th>
         <th>Autor</th>
-        <th>descricao</th>
+        <th>Descrição</th>
+        <th>Categoria</th>
+        <th>Ações</th>
     </tr>
     <?php foreach($livros as $livro): ?>
         <tr>
             <td><?php echo $livro['nome']; ?></td>
+            <td><?php echo $livro['autor']; ?></td>
+            <td><?php echo $livro['descricao']; ?></td>
+            <td><?php echo $livro['categoria_nome']; ?></td>
             <td>
                 <form method="POST">
                     <input type="hidden" name="livro_id" value="<?php echo $livro['id']; ?>">
