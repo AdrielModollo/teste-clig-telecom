@@ -37,7 +37,7 @@ class Core
 
         $currentController = ucfirst($currentController);
         $prefix = '\Controllers\\';
-
+            
         if (!file_exists('Controllers/'.$currentController.'.php') 
             || !method_exists($prefix.$currentController, $currentAction)) {
             $currentController = 'NotFoundController';

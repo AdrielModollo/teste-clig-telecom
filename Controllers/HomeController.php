@@ -3,16 +3,14 @@
 namespace Controllers;
 
 use \Core\Controller;
-use \Models\Student;
-use \Models\Course;
+use \Models\Usuario;
 
 class HomeController extends Controller 
 {
     public function __construct()
     {
-        $student = new Student();
-
-        if (!$student->isLoggedIn()) {
+        $usuario = new Usuario();
+        if (!$usuario->estaLogado()) {
             header('Location: '.BASE_URL.'login');
         }
     }
@@ -20,17 +18,13 @@ class HomeController extends Controller
     public function index(): void
     {
         $data = [
-            'info' => [],
-            'courses' => []
+            'info' => []
         ];
 
-        $student = new Student();
-        $student->setStudent($_SESSION['student']);
+        $usuario = new Usuario();
+        $usuario->setUsuario($_SESSION['usuario']);
 
-        $course = new Course();
-        $data['courses'] = $course->getCoursesByStudent($student->getId());
-
-        $data['info'] = $student;
+        $data['info'] = $usuario;
         $this->loadTemplate('home', $data);
     }
 }

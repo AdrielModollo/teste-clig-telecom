@@ -3,19 +3,19 @@
 namespace Controllers;
 
 use \Core\Controller;
-use \Models\Student;
+use \Models\Usuario;
 
 class LoginController extends Controller
 {
 	public function index()
 	{
-		if (!empty($_POST['email']) && !empty($_POST['password'])) {
+		if (!empty($_POST['email']) && !empty($_POST['senha'])) {
 			$email = $_POST['email'];
-			$password = md5($_POST['password']);
+			$senha = md5($_POST['senha']);
 
-			$student = new Student();
+			$usuario = new Usuario();
 
-			if ($student->login($email, $password)) {
+			if ($usuario->login($email, $senha)) {
 				header('Location: '.BASE_URL);
 			}
 		}

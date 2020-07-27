@@ -5,8 +5,8 @@ require 'environment.php';
 $config = [];
 
 if(ENVIRONMENT == 'development') {
-    define('BASE_URL', 'http://localhost/e-learning/');
-    $config['database_name'] = 'e_learning';
+    define('BASE_URL', 'http://localhost/livraria/');
+    $config['database_name'] = 'livraria';
     $config['host'] = 'localhost';
     $config['database_user'] = 'root';
     $config['database_password'] = '';

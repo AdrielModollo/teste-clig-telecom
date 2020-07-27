@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>E-learning</title>
+    <title>Livraria</title>
     <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL.'assets/css/main.css'; ?>">
     <?php if(isset($_GET['url']) && $_GET['url'] == 'login'): ?>
         <link rel="stylesheet" href="<?php echo BASE_URL.'assets/css/login.css'; ?>">
@@ -11,13 +11,10 @@
 </head>
 <body>
     <header>
-        <?php if(!empty($_SESSION['student'])): ?>
+        <?php if(!empty($_SESSION['usuario'])): ?>
             <a href="<?php echo BASE_URL.'login/logout'; ?>">
                 Sair
             </a>
-            <div class="user_header">
-                <?php echo $viewData['info']->getName(); ?>
-            </div>
         <?php endif; ?>
     </header>
     <?php $this->loadViewInTemplate($viewName, $viewData); ?>
