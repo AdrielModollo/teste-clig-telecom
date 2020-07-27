@@ -25,19 +25,12 @@ class Categoria extends Model {
         return $array;
     }
 
-    public function delete(int $categoria_id): void
+    public function excluir(int $categoria_id): void
     {
-        die('text');
-        $params = func_get_args();
-
-        $queries = [
-            'DELETE FROM categoria WHERE id = ?'
-        ];
-
-        foreach($queries as $query) {
-            $sql = $this->database->prepare($query);
-            $sql->execute($params);
-        }
+        $sql = 'DELETE FROM categorias WHERE id = :categoria_id';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':categoria_id', $categoria_id);
+        $sql->execute();
     }
 
     public function adicionar_categoria(string $nome): void

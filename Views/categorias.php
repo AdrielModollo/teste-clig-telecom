@@ -17,8 +17,7 @@
         <tr>
             <td><?php echo $categoria['nome']; ?></td>
             <td>
-                <form method="POST">
-                    <input type="hidden" name="categoria_id" value="<?php echo $categoria['id']; ?>">
+                <form method="POST" action="categorias/delete/<?php echo $categoria['id']; ?>">
                     <input type="submit" value="Excluir categoria">
                     <a href="<?php echo BASE_URL; ?>categorias/edit/<?php echo $categoria['id']; ?>">
                         Editar categoria
