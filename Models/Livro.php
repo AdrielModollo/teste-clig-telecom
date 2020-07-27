@@ -24,5 +24,27 @@ class Livro extends Model {
         return $array;
     }
 
+    
+    public function excluir(int $id): void
+    {
+        $sql = 'DELETE FROM livros WHERE id = :id';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+    }
+
+    public function adicionar(string $nome, string $autor, string $descricao): void
+    {
+        $sql = 'INSERT INTO livros
+                    (nome,autor,descricao)
+                VALUES
+                    (:nome, :autor, :descricao)';
+        $sql = $this->database->prepare($sql);
+        $sql->bindValue(':nome', $nome);
+        $sql->bindValue(':autor', $autor);
+        $sql->bindValue(':descricao', $descricao);
+        $sql->execute();
+    }
+
 }
 

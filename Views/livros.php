@@ -23,11 +23,11 @@
             <td><?php echo $livro['descricao']; ?></td>
             <td><?php echo $livro['categoria_nome']; ?></td>
             <td>
-                <form method="POST">
+                <form method="POST" action="livros/delete/<?php echo $livro['id']; ?>">
                     <input type="hidden" name="livro_id" value="<?php echo $livro['id']; ?>">
-                    <input type="submit" value="Excluir categoria">
+                    <input type="submit" value="Excluir livro">
                     <a href="<?php echo BASE_URL; ?>livros/edit/<?php echo $livro['id']; ?>">
-                        Editar categoria
+                        Editar livro
                     </a>
                 </form>
             </td>
