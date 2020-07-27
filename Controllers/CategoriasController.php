@@ -25,12 +25,29 @@ class CategoriasController extends Controller
 		return $this->loadTemplate('categorias', $data);
     }
 
-    public function adicionar_categoria(): void
+    public function add()
     {
-        if (!empty($_POST['nome'])) {
-            $name = $_POST['nome'];
+        $data = [];
+        $data['erros'] = [];
+
+        if (isset($_POST['nome'])) {
+            if (empty($_POST['nome'])) {
+                array_push($data['erros'], 'O nome da categoria é obrigatório');
+            }
+            
+            if (strlen($_POST['nome']) > 100) {
+                array_push($data['erros'], 'O nome da categoria deve possuir no máximo 100 caracteres');
+            }
+            
+            if (count($data['erros']) > 0) {
+                return $this->loadTemplate('adicionar_categoria', $data);
+            } else {
+                $this->categoria->adicionar($_POST['nome']);
+                header('Location: '.BASE_URL.'categorias');
+            }    
         }
-        header('Location: '.BASE_URL.'categorias');
+
+        return $this->loadTemplate('adicionar_categoria', $data);
     }
     
     public function delete(int $categoria_id): void

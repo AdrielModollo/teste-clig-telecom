@@ -7,7 +7,7 @@
     <?php endif; ?>
 </header>
 <h1>Categorias</h1>
-<a href="<?php echo BASE_URL; ?>categorias/adicionar_categoria">Adicionar categoria</a>
+<a href="<?php echo BASE_URL; ?>categorias/add">Adicionar categoria</a>
 <table border="1" width="100%">
     <tr>
         <th>Nome</th>

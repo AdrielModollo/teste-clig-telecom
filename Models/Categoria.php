@@ -33,9 +33,9 @@ class Categoria extends Model {
         $sql->execute();
     }
 
-    public function adicionar_categoria(string $nome): void
+    public function adicionar(string $nome): void
     {
-        $sql = 'INSERT INTO categoria
+        $sql = 'INSERT INTO categorias
                     (nome)
                 VALUES
                     (:nome)';
