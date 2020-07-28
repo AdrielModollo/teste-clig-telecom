@@ -8,8 +8,8 @@
 </header>
 <h1>Adicionar livro</h1>
 <form method="POST">
-    Nome: <br>
-    <input type="text" name="nome"><br>
+    Título: <br>
+    <input type="text" name="titulo"><br>
     Autor: <br>
     <input type="text" name="autor"><br>
     Categoria: <br>

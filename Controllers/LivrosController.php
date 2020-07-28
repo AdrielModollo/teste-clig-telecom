@@ -33,8 +33,8 @@ class LivrosController extends Controller
         $data['categorias'] = $this->categoria->getCategorias();
         $data['erros'] = [];
 
-        if (isset($_POST['nome'])) { 
-            $nome = $_POST['nome'];
+        if (isset($_POST['titulo'])) { 
+            $titulo = $_POST['titulo'];
             $autor = $_POST['autor'];
             $descricao = $_POST['descricao'];
             $categoria_id = $_POST['categoria_id'];
@@ -44,7 +44,7 @@ class LivrosController extends Controller
             if (count($data['erros']) > 0) {
                 return $this->loadTemplate('adicionar_livro', $data);
             } else {
-                $this->livro->adicionar($nome, $autor, $descricao, $categoria_id);
+                $this->livro->adicionar($titulo, $autor, $descricao, $categoria_id);
                 header('Location: '.BASE_URL.'livros');
             }    
         }
@@ -62,7 +62,7 @@ class LivrosController extends Controller
             header('Location: '.BASE_URL.'livros');
         }
 
-        if (isset($_POST['nome'])) {
+        if (isset($_POST['titulo'])) {
             $data['erros'] = $this->validar_formulario($data['erros']);
             
             if (count($data['erros']) > 0) {
@@ -70,7 +70,7 @@ class LivrosController extends Controller
             } else {
                 $this->livro->atualizar(
                     $livro_id, 
-                    $_POST['nome'], 
+                    $_POST['titulo'], 
                     $_POST['autor'],
                     $_POST['descricao'],
                     $_POST['categoria_id']
@@ -84,12 +84,12 @@ class LivrosController extends Controller
     }
     
     private function validar_formulario($erros): array {
-        if (empty($_POST['nome'])) {
-            array_push($erros, 'O nome do livro é obrigatório');
+        if (empty($_POST['titulo'])) {
+            array_push($erros, 'O título do livro é obrigatório');
         }
 
-        if (strlen($_POST['nome']) > 100) {
-            array_push($erros, 'O nome do livro deve possuir no máximo 100 caracteres');
+        if (strlen($_POST['titulo']) > 100) {
+            array_push($erros, 'O título do livro deve possuir no máximo 100 caracteres');
         }
 
         if (empty($_POST['autor'])) {

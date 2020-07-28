@@ -10,7 +10,7 @@
 <a href="<?php echo BASE_URL; ?>livros/add">Adicionar livro</a>
 <table border="1" width="100%">
     <tr>
-        <th>Nome</th>
+        <th>Título</th>
         <th>Autor</th>
         <th>Descrição</th>
         <th>Categoria</th>
@@ -18,7 +18,7 @@
     </tr>
     <?php foreach($livros as $livro): ?>
         <tr>
-            <td><?php echo $livro['nome']; ?></td>
+            <td><?php echo $livro['titulo']; ?></td>
             <td><?php echo $livro['autor']; ?></td>
             <td><?php echo $livro['descricao']; ?></td>
             <td><?php echo $livro['categoria_nome']; ?></td>

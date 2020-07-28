@@ -12,7 +12,7 @@ class Livro extends Model {
     {
         $array = [];
 
-        $sql = 'SELECT l.id, l.nome, l.autor, l.descricao, c.nome as categoria_nome 
+        $sql = 'SELECT l.id, l.titulo, l.autor, l.descricao, c.nome as categoria_nome 
                 FROM livros l 
                 INNER JOIN categorias c ON c.id = l.categoria_id';
         $sql = $this->database->query($sql);
@@ -25,7 +25,7 @@ class Livro extends Model {
     }
 
     public function getLivro(int $livro_id) {
-        $sql = 'SELECT id, nome, autor, descricao, categoria_id FROM livros WHERE id = :livro_id';
+        $sql = 'SELECT id, titulo, autor, descricao, categoria_id FROM livros WHERE id = :livro_id';
         $sql = $this->database->prepare($sql);
         $sql->bindValue(':livro_id', $livro_id);
         $sql->execute();
@@ -37,12 +37,12 @@ class Livro extends Model {
         return null;
     }
 
-    public function atualizar(int $livro_id, string $nome, string $autor, string $descricao, int $categoria_id) {
+    public function atualizar(int $livro_id, string $titulo, string $autor, string $descricao, int $categoria_id) {
         $sql = 'UPDATE livros 
-                SET nome = :nome, autor = :autor, descricao = :descricao, categoria_id = :categoria_id 
+                SET titulo = :titulo, autor = :autor, descricao = :descricao, categoria_id = :categoria_id 
                 WHERE id = :livro_id';
         $sql = $this->database->prepare($sql);
-        $sql->bindValue(':nome', $nome);
+        $sql->bindValue(':titulo', $titulo);
         $sql->bindValue(':autor', $autor);
         $sql->bindValue(':descricao', $descricao);
         $sql->bindValue(':categoria_id', $categoria_id);
@@ -58,14 +58,14 @@ class Livro extends Model {
         $sql->execute();
     }
 
-    public function adicionar(string $nome, string $autor, string $descricao, int $categoria_id): void
+    public function adicionar(string $titulo, string $autor, string $descricao, int $categoria_id): void
     {
         $sql = 'INSERT INTO livros
-                    (nome, autor, descricao, categoria_id)
+                    (titulo, autor, descricao, categoria_id)
                 VALUES
-                    (:nome, :autor, :descricao, :categoria_id)';
+                    (:titulo, :autor, :descricao, :categoria_id)';
         $sql = $this->database->prepare($sql);
-        $sql->bindValue(':nome', $nome);
+        $sql->bindValue(':titulo', $titulo);
         $sql->bindValue(':autor', $autor);
         $sql->bindValue(':descricao', $descricao);
         $sql->bindValue(':categoria_id', $categoria_id); 

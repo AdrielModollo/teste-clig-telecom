@@ -8,8 +8,8 @@
 </header>
 <h1>Editar livro</h1>
 <form method="POST">
-    Nome: <br>
-    <input type="text" name="nome" value="<?php echo $livro['nome']; ?>"><br>
+    Título: <br>
+    <input type="text" name="titulo" value="<?php echo $livro['titulo']; ?>"><br>
     Autor: <br>
     <input type="text" name="autor" value="<?php echo $livro['autor']; ?>"><br>
     Categoria: <br>
