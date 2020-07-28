@@ -54,8 +54,23 @@ No arquivo composer.json está a configuração do autoload da aplicação
 Para entender o funcionamento do autoload acesse este artigo para mais informações:
 [https://www.alura.com.br/artigos/avancando-com-o-composer](https://www.alura.com.br/artigos/avancando-com-o-composer)
 
-Para inicializar a configuração do autoload do composer, digite o seguinte comando em um terminal: 
+Para inicializar a configuração do autoload do composer, digite o seguinte comando em um terminal 
+na pasta raiz do projeto: 
 
 ```
 composer install
 ```
+
+### Como realizar o login na aplicação
+
+Para cadastrar categorias e livros é necessário estar autenticado na aplicação.
+
+Caso você acesse a url da aplicação (http://localhost/livraria) e não esteja autenticado, você será redirecionado para a página de login na url: (http://localhost/livraria/login)
+
+No script database.sql localizado na raiz da aplicação, e executado anteriormente, há um script de criação de um usuário padrão do sistema
+
+```sql
+INSERT INTO usuarios (email, senha) VALUES ('teste@gmail.com', MD5('123'));
+```
+
+Utilizamos a função MD5 do MySql e do PHP para criptografar a senha do usuário e não deixar a senha do usuário visível no banco de dados
