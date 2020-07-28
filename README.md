@@ -12,10 +12,11 @@ git clone https://github.com/AdrielModollo/teste-clig-telecom.git
 
 ### Como configurar o acesso ao banco de dados
 As configurações de acesso ao banco de dados ficam no arquivo config.php, localizado na raiz da aplicação.
-Para alterar a url base da aplicação altere a constante BASE_URL, por padrão a url base é http://localhost/livraria/
-Para alterar o nome do banco de dados altere a variável $config['database_name']
-Para alterar o usuário do banco de dados altere a variável $config['database_user']
-Para alterar a senha do banco de dados altere a variável $config['database_password']
+
+* Para alterar a url base da aplicação altere a constante BASE_URL, por padrão a url base é http://localhost/livraria/
+* Para alterar o nome do banco de dados altere a variável $config['database_name']
+* Para alterar o usuário do banco de dados altere a variável $config['database_user']
+* Para alterar a senha do banco de dados altere a variável $config['database_password']
 
 ```php
 if(ENVIRONMENT == 'development') {
@@ -33,11 +34,28 @@ if(ENVIRONMENT == 'development') {
 }
 ```
 
-### Script para criar as tabelas do banco e os dados iniciais
+### Script para criar as tabelas do banco e carregar os dados iniciais
 Copie todo o conteúdo do arquivo database.sql localizado na raiz da aplicação e execute no mysql
 
 ```sql
 CREATE DATABASE livraria;
 
 USE livraria;
+```
+
+### Instalação das bibliotecas
+Para execução do projeto é necessário baixar e instalar o composer:
+[https://getcomposer.org/download/](https://getcomposer.org/download/)
+
+O composer é utilizado para baixar dependências de terceiros
+
+No arquivo composer.json está a configuração do autoload da aplicação
+
+Para entender o funcionamento do autoload acesse este artigo para mais informações:
+[https://www.alura.com.br/artigos/avancando-com-o-composer](https://www.alura.com.br/artigos/avancando-com-o-composer)
+
+Para inicializar a configuração do autoload do composer, digite o seguinte comando em um terminal: 
+
+```
+composer install
 ```
