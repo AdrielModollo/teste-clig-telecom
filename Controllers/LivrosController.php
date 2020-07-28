@@ -38,27 +38,9 @@ class LivrosController extends Controller
             $autor = $_POST['autor'];
             $descricao = $_POST['descricao'];
             $categoria_id = $_POST['categoria_id'];
-
-            if (empty($nome)) {
-                array_push($data['erros'], 'O nome do livro é obrigatório');
-            }
-
-            if (strlen($nome) > 100) {
-                array_push($data['erros'], 'O nome do livro deve possuir no máximo 100 caracteres');
-            }
-
-            if (empty($autor)) {
-                array_push($data['erros'], 'O nome do autor é obrigatório');
-            }
-
-            if (strlen($autor) > 100) {
-                array_push($data['erros'], 'O nome do autor deve possuir no máximo 100 caracteres');
-            }
-
-            if (empty($categoria_id)) {
-                array_push($data['erros'], 'A categoria é obrigatória');
-            }
             
+            $data['erros'] = $this->validar_formulario($data['erros']);
+
             if (count($data['erros']) > 0) {
                 return $this->loadTemplate('adicionar_livro', $data);
             } else {
@@ -68,8 +50,63 @@ class LivrosController extends Controller
         }
 
         return $this->loadTemplate('adicionar_livro', $data);
+    } 
+
+    public function edit(int $livro_id) {
+        $data = [];
+        $data['livro'] = $this->livro->getLivro($livro_id);
+        $data['categorias'] = $this->categoria->getCategorias();
+        $data['erros'] = [];
+
+        if ($data['livro'] == null) {
+            header('Location: '.BASE_URL.'livros');
+        }
+
+        if (isset($_POST['nome'])) {
+            $data['erros'] = $this->validar_formulario($data['erros']);
+            
+            if (count($data['erros']) > 0) {
+                header('Location: '.BASE_URL.'livros/edit/'.$livro_id);
+            } else {
+                $this->livro->atualizar(
+                    $livro_id, 
+                    $_POST['nome'], 
+                    $_POST['autor'],
+                    $_POST['descricao'],
+                    $_POST['categoria_id']
+                );
+                    
+                header('Location: '.BASE_URL.'livros');
+            }    
+        }
+
+        return $this->loadTemplate('editar_livro', $data);
     }
     
+    private function validar_formulario($erros): array {
+        if (empty($_POST['nome'])) {
+            array_push($erros, 'O nome do livro é obrigatório');
+        }
+
+        if (strlen($_POST['nome']) > 100) {
+            array_push($erros, 'O nome do livro deve possuir no máximo 100 caracteres');
+        }
+
+        if (empty($_POST['autor'])) {
+            array_push($erros, 'O nome do autor é obrigatório');
+        }
+
+        if (strlen($_POST['autor']) > 100) {
+            array_push($erros, 'O nome do autor deve possuir no máximo 100 caracteres');
+        }
+
+        if (empty($_POST['categoria_id'])) {
+            array_push($erros, 'A categoria é obrigatória');
+        }
+
+        return $erros;
+    } 
+
     public function delete(int $id): void
     {
         $this->livro->excluir($id);
