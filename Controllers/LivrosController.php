@@ -23,7 +23,15 @@ class LivrosController extends Controller
 	public function index()
 	{
 		$data = [];
-        $data['livros'] = $this->livro->getLivros();
+        $data['livros'] = $this->livro->getLivrosPorFiltro($_POST);
+        $data['categorias'] = $this->categoria->getCategorias();
+		return $this->loadTemplate('livros', $data);
+    }
+
+    public function reset() {
+        $data = [];
+        $data['livros'] = $this->livro->getLivrosPorFiltro([]);
+        $data['categorias'] = $this->categoria->getCategorias();
 		return $this->loadTemplate('livros', $data);
     }
     

@@ -7,6 +7,28 @@
     <?php endif; ?>
 </header>
 <h1>Livros</h1>
+<div>
+    <form method="POST" action="/livraria/livros">
+        Título: <br>
+        <input type="text" name="titulo" value="<?php echo isset($_POST['titulo']) ? $_POST['titulo'] : '' ?>"><br>
+        Autor: <br>
+        <input type="text" name="autor" value="<?php echo isset($_POST['autor']) ? $_POST['autor'] : '' ?>"><br>
+        Categoria: <br>
+        <select name="categoria_id">
+            <option value=""></option>
+            <?php foreach($categorias as $categoria): ?>
+                <option value="<?php echo $categoria['id']; ?>" <?php echo isset($_POST['categoria_id']) && $_POST['categoria_id'] == $categoria['id'] ? 'selected' : '' ?>>
+                    <?php echo $categoria['nome']; ?>
+                </option>
+            <?php endforeach; ?>
+        </select><br><br>
+        <input type="submit" value="Filtrar" /> 
+    </form>
+    <form method="POST" action="/livraria/livros/reset">
+        <input type="submit" value="Limpar" />
+    </form>
+    <br><br>
+</div>
 <a href="<?php echo BASE_URL; ?>livros/add">Adicionar livro</a>
 <table border="1" width="100%">
     <tr>
